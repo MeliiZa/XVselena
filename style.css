@@ -226,6 +226,15 @@ h1 {
   }
 }
 
+.boxicon{
+  display: flex;
+  justify-content: right;
+}
+
+.fa-solid{
+  font-size: 80px ;
+}
+
 /*mobile media query */
 @media (max-width: 768px) {
   html, body{
