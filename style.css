@@ -233,4 +233,7 @@ h1 {
   .Gallery {
     margin-left: .7em !important;
   }
+  .herosection {
+    background-position-x: 75%;
+  }
 }
