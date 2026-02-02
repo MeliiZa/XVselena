@@ -228,6 +228,6 @@ h1 {
 /*mobile media query */
 @media (max-width: 768px) {
   .Gallery {
-    margin-left: 2em !important;
+    margin-left: 1em !important;
   }
 }
