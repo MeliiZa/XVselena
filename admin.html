@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>RSVP Admin Dashboard</title>
+
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      padding: 40px;
+    }
+
+    h1 {
+      margin-bottom: 8px;
+    }
+
+    #summary {
+      font-weight: 500;
+      margin-bottom: 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: #f5f5f5;
+    }
+
+    tr:nth-child(even) {
+      background: #fafafa;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>RSVP Admin Dashboard</h1>
+  <p id="summary">Loading...</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Invite</th>
+        <th>Max Guests</th>
+        <th>Attending</th>
+        <th>Guest Names</th>
+      </tr>
+    </thead>
+    <tbody id="table-body"></tbody>
+  </table>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+
+      const db = supabase.createClient(
+        "https://ojizqwpuejnatavifxys.supabase.co", // Supabase URL
+        "sb_publishable_g_ttwNUwrEAQy3hrWVAWxw_BN1EMNYT"  // Supabase anon key
+      );
+
+      const summaryEl = document.getElementById("summary");
+      const tableBody = document.getElementById("table-body");
+
+      const { data, error } = await db
+        .from("invites")
+        .select(`
+          id,
+          display_name,
+          max_guests,
+          rsvps (
+            attending,
+            guest_names
+          )
+        `)
+        .order("display_name");
+
+      if (error) {
+        console.error(error);
+        summaryEl.textContent = "Failed to load data.";
+        return;
+      }
+
+      let totalGuests = 0;
+
+      data.forEach(invite => {
+        const rsvp = invite.rsvps?.[0];
+        const attending = rsvp?.attending ?? 0;
+        const guestNames = rsvp?.guest_names?.join(", ") || "—";
+
+        totalGuests += attending;
+
+        const row = document.createElement("tr");
+
+        row.innerHTML = `
+          <td>${invite.display_name}</td>
+          <td>${invite.max_guests}</td>
+          <td>${attending}</td>
+          <td>${guestNames}</td>
+        `;
+
+        tableBody.appendChild(row);
+      });
+
+      summaryEl.textContent = Total confirmed guests: ${totalGuests};
+
+    });
+  </script>
+
+</body>
+</html>

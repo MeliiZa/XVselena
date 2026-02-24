@@ -57,6 +57,10 @@ h1 {
   font-size: 65px;
 }
 
+h4 {
+  color: rgb(5, 151, 177);
+}
+
 
 .hero-text{
   color:white;
@@ -74,9 +78,7 @@ h1 {
 .slogansection{
   color:dimgray
 }
-.titlereception{
-  margin-top: 3em;
-}
+
 
 .fotos{
   height: 70vh;
@@ -237,10 +239,20 @@ h1 {
   top: -80px;
 }
 
-
+.button {
+  font: bold 11px Arial;
+  text-decoration: none;
+  background-color: #EEEEEE;
+  color: #333333;
+  padding: 2px 6px 2px 6px;
+  border-top: 1px solid #CCCCCC;
+  border-right: 1px solid #333333;
+  border-bottom: 1px solid #333333;
+  border-left: 1px solid #CCCCCC;
+}
 
 .fa-solid{
-  font-size: 80px ;
+  font-size: 60px ;
 }
 
 .fa-regular{
